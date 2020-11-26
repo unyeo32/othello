@@ -9,9 +9,6 @@ int num_O, num_X;
 int m,n;
 int i,j;
 
-
-//printf_othello() 함수 정의 
-
 //check_result 함수 정의 
 void check_result()
 {
@@ -47,7 +44,7 @@ int white_flip_able(int i, int j)
 				if(gameboard[i][n]=='O'){
 					result = result+1;
 					break;
-				if (gameboard[i][n]==NONE)
+				if (gameboard[i][n]== NONE)
 					break;
 				}
 				
@@ -159,13 +156,41 @@ int black_flip_able(int i, int j)
 	return result;
 }
 
+//게임이 종료할 상황을 판별하는 함수 
+int isGameEnd()
+{
+	int k;
+	for (i=0;i<N;i++)
+		for (j=0;j<N;j++)
+		{
+			if (gameboard[i][j] != NONE || white_flip_able(i,j) ==0 || black_flip_able(i,j) ==0)
+				k=0;
+			
+			else
+				k=-1;
+		}
+	return k;	
+}
+
+//돌 뒤집기 함수 
+int flip_othello(int i, int j) 
+{
+	int turn; 
+	int W, E, North, S, NW, NE, SW, SE;
+	 
+	while (turn%2 != 0) //흰돌 차례에서 뒤집을 때 
+		
+	else //검은돌 차례에서 뒤집을 때 
+		
+}
 
 
 int main(int argc, char *argv[]) {
 	void init_othello(); //게임 초기화
-	int i,j,m,n; 
+	int W, E, North, S, NW, NE, SW, SE; 
 	int turn=1;
 	int result=1;
+	int count;
 	
 	while (isGameEnd()==0){ //game 종료 조건 확인
 		print_othello(); 
@@ -183,16 +208,16 @@ int main(int argc, char *argv[]) {
 					continue; 
 				
 				
-			if (뒤집기 시도){
-			printf("%i othello flipped", count)//몇개뒤집었는지 출력
+			if (flip_othello(i,j)==0){ //뒤집기 시도 
+			printf("%i othello flipped", count);//몇개뒤집었는지 출력
 			turn = turn+1; // (turn+1)값이 turn 변수에 저장된다 
 			} 
 			
 		else//뒤집기가 불가한 경우 
 		printf("invalid input, retry\n");
 		
-		printf("::flip result::\n");
-		printf("W:%i, E:%i, N:%i, S:%i, NW:%i, NE:%i, SW:%i, SE:%i", W, E, N, S, NW, NE, SW, SE);	
+		printf("::flip result::\n");//뒤집기 결과 안내 
+		printf("W:%i, E:%i, N:%i, S:%i, NW:%i, NE:%i, SW:%i, SE:%i", W, E, North, S, NW, NE, SW, SE);	
 	}
 	check_result();//게임 결과 출력 
 }
