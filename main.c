@@ -19,28 +19,29 @@ int main(int argc, char *argv[]) {
 		
 		scanf("%i %i", &i, &j);//배치할 좌표 입력받기
 		
-		if (result>0)
+		if (result>0) //돌 배치가 가능한 경우 
 			continue;
 		
-		if (turn%2 != 0)
-			if (white_flip_able(i,j) > 0 && gameboard[i][j]==NONE) //뒤집기 가능하고 아직 빈칸인 경우 
-				continue; 
-		else
-			if (black_flip_able(i,j) >0 && gameboard[i][j]==NONE)
-				continue; 
+			if (turn%2 != 0)
+				if (white_flip_able(i,j) > 0 && gameboard[i][j]==NONE) //뒤집기 가능하고 아직 빈칸인 경우 
+					continue; 
+			else
+				if (black_flip_able(i,j) >0 && gameboard[i][j]==NONE)
+					continue; 
 				
 				
-		if (뒤집기 시도){
-		printf("%i othello flipped", count)//몇개뒤집었는지 출력
-		turn = turn+1; // (turn+1)값이 turn 변수에 저장된다 
-		} 
-		else
+			if (뒤집기 시도){
+			printf("%i othello flipped", count)//몇개뒤집었는지 출력
+			turn = turn+1; // (turn+1)값이 turn 변수에 저장된다 
+			} 
+			
+		else//뒤집기가 불가한 경우 
 		printf("invalid input, retry\n");
 		
 		printf("::flip result::\n");
 		printf("W:%i, E:%i, N:%i, S:%i, NW:%i, NE:%i, SW:%i, SE:%i", W, E, N, S, NW, NE, SW, SE);	
 	}
-	check_result();
+	check_result();//게임 결과 출력 
 }
 
 
@@ -88,7 +89,7 @@ void check_result()
 		printf("Black win\n");			
 }
 
-//flip_othello 함수 정의 
+//흰돌차례일 때 flip_able 함수 정의 
 int white_flip_able(int i, int j)
 {
 	int i,j,k;
@@ -150,4 +151,69 @@ int white_flip_able(int i, int j)
 			}
 		 } 
 	return result;
+}
+
+//검은돌 차례일 때 flip_able 함수 정의 
+int black_flip_able(int i, int j)
+{
+	int i,j;
+	int result=0; 
+	
+	if (i<0 || j<0 || i>N-1 || j>0)
+		return 0;
+	if (gameboard[i][j] != NONE)
+		return 0;
+	if (gameboard[i][j+1]=='O' && i<N)//동쪽에 있던 검은돌이 뒤집힐 때 
+		{
+			for (n=j+1;n<N-1;n++){
+				if(gameboard[i][n]=='X'){
+					result = result+1;
+					break;
+				if (gameboard[i][n]==NONE)
+					break;
+				}
+				
+			}
+		 } 
+	
+	if (gameboard[i][j-1]=='O' && j>N-1)//서쪽에 있던 검은돌이 뒤집힐 때 
+		{
+			for (n=j-1; n>0; n--){
+				if(gameboard[i][n]=='X'){
+					result = result+1;
+					break;
+				if (gameboard[i][n]==NONE)
+					break;
+				}
+				
+			}
+		 } 
+	
+	if (gameboard[i-1][j]=='O' && i<N-1)//북쪽에 있던 검은돌이 뒤집힐 때 
+		{
+			for (m>0; m<i; m++){
+				if(gameboard[m][j]=='X'){
+					result = result+1;
+					break;
+				if (gameboard[i][m]==NONE)
+					break;
+				}
+				
+			}
+		 }
+	
+	if (gameboard[i+1][j]=='O' && i>0)//남쪽에 있던 검은돌이 뒤집힐 때 
+		{
+			for (m=i+1; m<N-1; m++){
+				if(gameboard[m][j]=='X'){
+					result = result+1;
+					break;
+				if (gameboard[m][j]==NONE)
+					break;
+				}
+				
+			}
+		 } 
+	return result;
+}
 }
