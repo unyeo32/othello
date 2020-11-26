@@ -6,25 +6,33 @@
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 int gameboard[N][N];
 int num_O, num_X;
+int m,n;
 
 int main(int argc, char *argv[]) {
 	void init_othello(); //게임 초기화
-	int i,j; 
+	int i,j,m,n; 
 	int turn=1;
+	int result=1;
 	
 	while (isGameEnd()==0){ //game 종료 조건 확인
 		print_othello(); 
 		
-		if (배치가 가능한 칸이 있는지 확인)
-			continue; //두 플레이어 모두 배치 불가능하면 반복문을 빠져나가야감
-		 
 		scanf("%i %i", &i, &j);//배치할 좌표 입력받기
 		
+		if (result>0)
+			continue;
 		
-		if (입력한 좌표가 적절한지 확인)
-			if (뒤집기 시도){
-			printf("%i othello flipped", )//몇개뒤집었는지 출력
-			turn = turn+1; // (turn+1)값이 turn 변수에 저장된다 
+		if (turn%2 != 0)
+			if (white_flip_able(i,j) > 0 && gameboard[i][j]==NONE) //뒤집기 가능하고 아직 빈칸인 경우 
+				continue; 
+		else
+			if (black_flip_able(i,j) >0 && gameboard[i][j]==NONE)
+				continue; 
+				
+				
+		if (뒤집기 시도){
+		printf("%i othello flipped", count)//몇개뒤집었는지 출력
+		turn = turn+1; // (turn+1)값이 turn 변수에 저장된다 
 		} 
 		else
 		printf("invalid input, retry\n");
@@ -81,11 +89,65 @@ void check_result()
 }
 
 //flip_othello 함수 정의 
-int flip_able(int x, int y)
+int white_flip_able(int i, int j)
 {
 	int i,j,k;
-	if (x<0 || y<0 || x>N-1 || y>N-1)
+	int result=0; 
+	
+	if (i<0 || j<0 || i>N-1 || j>0)
 		return 0;
-	if (gameboard[x][y] != NONE)
+	if (gameboard[i][j] != NONE)
 		return 0;
+	if (gameboard[i][j+1]=='X' && i<N)//동쪽에 있던 검은돌이 뒤집힐 때 
+		{
+			for (n=j+1;n<N-1;n++){
+				if(gameboard[i][n]=='O'){
+					result = result+1;
+					break;
+				if (gameboard[i][n]==NONE)
+					break;
+				}
+				
+			}
+		 } 
+	
+	if (gameboard[i][j-1]=='X' && j>N-1)//서쪽에 있던 검은돌이 뒤집힐 때 
+		{
+			for (n=j-1; n>0; n--){
+				if(gameboard[i][n]=='O'){
+					result = result+1;
+					break;
+				if (gameboard[i][n]==NONE)
+					break;
+				}
+				
+			}
+		 } 
+	
+	if (gameboard[i-1][j]=='X' && i<N-1)//북쪽에 있던 검은돌이 뒤집힐 때 
+		{
+			for (m>0; m<i; m++){
+				if(gameboard[m][j]=='O'){
+					result = result+1;
+					break;
+				if (gameboard[i][m]==NONE)
+					break;
+				}
+				
+			}
+		 }
+	
+	if (gameboard[i+1][j]=='X' && i>0)//남쪽에 있던 검은돌이 뒤집힐 때 
+		{
+			for (m=i+1; m<N-1; m++){
+				if(gameboard[m][j]=='O'){
+					result = result+1;
+					break;
+				if (gameboard[m][j]==NONE)
+					break;
+				}
+				
+			}
+		 } 
+	return result;
 }
