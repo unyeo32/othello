@@ -79,3 +79,13 @@ void check_result()
 	else
 		printf("Black win\n");			
 }
+
+//flip_othello 함수 정의 
+int flip_able(int x, int y)
+{
+	int i,j,k;
+	if (x<0 || y<0 || x>N-1 || y>N-1)
+		return 0;
+	if (gameboard[x][y] != NONE)
+		return 0;
+}
