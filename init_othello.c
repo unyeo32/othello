@@ -1,3 +1,4 @@
+
 #define N 6
 #define NONE 0
 int gameboard[N][N];
@@ -22,6 +23,7 @@ for(i=0; i<N; i++){
 		printf("|%c", gameboard[i][j]);
 }
 printf("\n -------------\n");
-printf("\nSTATUS - White:2, Black:2\n");	
+printf("\nSTATUS - White:2, Black:2\n");
+return;	
 }
 
