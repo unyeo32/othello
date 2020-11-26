@@ -11,33 +11,6 @@ int i,j;
 
 
 //printf_othello() 함수 정의 
-void print_othello()
-{
-	int i, j;
-	int turn;
-
-	gameboard[2][2]='O';
-	gameboard[3][3]='O';
-	gameboard[2][3]='X';
-	gameboard[3][2]='X';
-
-		
-	printf("  0 1 2 3 4 5");		
-	for(i=0; i<N; i++){
-		printf("\n -------------\n%i", i);
-		for (j=0; j<N; j++)
-			printf("|%c", gameboard[i][j]);
-	}
-	printf("\n -------------\n");	
-	
-	
-	if (turn%2 != 0) //turn이 홀수일 때 흰돌 차례 
-		printf("put a new white othello:\n"); 	
-	else //turn이 짝수일 때 검은돌 차례 
-		printf("put a new black othello:\n");
-		
-	return;
-}	
 
 //check_result 함수 정의 
 void check_result()
