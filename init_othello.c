@@ -1,4 +1,5 @@
 #define N 6
+#define NONE 0
 int gameboard[N][N];
 
 extern void init_othello()
@@ -6,7 +7,7 @@ extern void init_othello()
 int x,y,i,j;
 for (x=0; x<N; x++)
 	for (y=0; y<N; y++)
-		gameboard[x][y]= ' ';
+		gameboard[x][y]= NONE;
 
 gameboard[2][2]='O';
 gameboard[3][3]='O';
